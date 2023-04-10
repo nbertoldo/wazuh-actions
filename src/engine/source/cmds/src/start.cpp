@@ -273,7 +273,7 @@ void runStart(ConfHandler confManager)
             }
         }
 
-        // Register Configuration API commands
+        // Configuration manager
         api::config::handlers::registerHandlers(api, confManager);
         WAZUH_LOG_DEBUG("Configuration manager API registered.");
 
