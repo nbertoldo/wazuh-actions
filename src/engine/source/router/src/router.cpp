@@ -185,7 +185,6 @@ void Router::removeRoute(const std::string& routeName)
         // Should never happen
         WAZUH_LOG_WARN("Router: couldn't delete policy '{}': {} ", policyName, err.value().message);
     }
-    return;
 }
 
 std::vector<Router::Entry> Router::getRouteTable()
@@ -281,7 +280,7 @@ std::optional<base::Error> Router::changeRoutePriority(const std::string& name, 
     return std::nullopt;
 }
 
-std::optional<base::Error> Router::enqueueEvent(base::Event event)
+std::optional<base::Error> Router::enqueueEvent(base::Event&& event)
 {
     if (!m_isRunning.load() || !m_queue)
     {
@@ -298,7 +297,7 @@ std::optional<base::Error> Router::enqueueOssecEvent(std::string_view event)
     try
     {
         base::Event ev = base::parseEvent::parseOssecEvent(event.data());
-        err = enqueueEvent(ev);
+        err = enqueueEvent(std::move(ev));
     }
     catch (const std::exception& e)
     {
@@ -345,10 +344,10 @@ std::optional<base::Error> Router::run(std::shared_ptr<concurrentQueue> queue)
                         eventsReceivedPerSecond->addValue(1UL);
 
                         // Used Queue History
-                        usedQueueHistory->recordValue(static_cast<uint64_t>(queue->size_approx()));
+                        usedQueueHistory->recordValue(static_cast<uint64_t>(queue->size()));
 
                         // Used Queue
-                        usedQueue->setValue(static_cast<uint64_t>(queue->size_approx()));
+                        usedQueue->setValue(static_cast<uint64_t>(queue->size()));
 
                         std::shared_lock lock {m_mutexRoutes};
                         for (auto& route : m_priorityRoute)
