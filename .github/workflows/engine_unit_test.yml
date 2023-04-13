@@ -51,10 +51,10 @@ jobs:
       uses: lukka/run-cmake@v3
       with:
         cmakeListsOrSettingsJson: CMakeListsTxtAdvanced
-        cmakeListsTxtPath: '${{env.ENGINE_DIR}/CMakeLists.txt'
+        cmakeListsTxtPath: '${{env.ENGINE_DIR}}/CMakeLists.txt'
         cmakeAppendedArgs: '-DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
         buildWithCMake: true
-        buildDirectory: '${{env.ENGINE_DIR}/build'
+        buildDirectory: '${{env.ENGINE_DIR}}/build'
 
     - name: Unit Test
       working-directory: ${{env.ENGINE_DIR}}/build
