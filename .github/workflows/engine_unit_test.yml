@@ -40,7 +40,7 @@ jobs:
         key: ${{ github.workflow }}-${{ runner.os }}
 
     - name: Configure CMake
-      run: cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -S ${{env.ENGINE_DIR}} -B ${{env.ENGINE_DIR}}/build
+      run: cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -S ${{env.ENGINE_DIR}} -B ${{env.ENGINE_DIR}}/build
 
     - name: Build
       run: cmake --build ${{env.ENGINE_DIR}}/build --config ${{env.BUILD_TYPE}} --target all -j2
