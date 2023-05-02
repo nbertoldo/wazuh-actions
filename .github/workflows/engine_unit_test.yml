@@ -48,6 +48,6 @@ jobs:
     - name: Unit Test
       working-directory: ${{env.ENGINE_DIR}}/build
       run: |
-        mkdir /var/ossec/queue/db/wdb
+        mkdir -p /var/ossec/queue/db/wdb
         ctest -C ${{env.BUILD_TYPE}} -T test --output-on-failure
 
